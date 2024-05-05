@@ -13,7 +13,7 @@ import {
 import useFetchJobs from "./hooks/useFetchJobs";
 
 function App() {
-  const { getData } = useFetchJobs(true);
+  const { getData, setOffset } = useFetchJobs(true);
 
   getData();
 
@@ -45,7 +45,13 @@ function App() {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button variant="contained" size="small">
+                  <Button
+                    onClick={() => {
+                      setOffset((prev) => prev + 10);
+                    }}
+                    variant="contained"
+                    size="small"
+                  >
                     Share
                   </Button>
                   <Button variant="contained" size="small">

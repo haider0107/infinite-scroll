@@ -7,7 +7,7 @@ export const jobDataSlice = createSlice({
   initialState,
   reducers: {
     addJobs: (state, action) => {
-      state.push(action.payload);
+      state.push(...action.payload);
     },
     removeJob: (state, action) => {
       state = state.filter((job) => job.jdUid !== action.payload);
