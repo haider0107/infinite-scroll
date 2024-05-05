@@ -9,12 +9,27 @@ export const jobDataSlice = createSlice({
     addJobs: (state, action) => {
       state.push(...action.payload);
     },
+    filterJobByLocation: (state, action) => {
+      state = state.filter((job) => job.location === action.payload);
+    },
+    filterJobByExpericance: (state, action) => {
+      state = state.filter((job) => job.minExp === action.payload);
+    },
+    filterJobByCompany: (state, action) => {
+      state = state.filter((job) => job.companyName === action.payload);
+    },
+    filterJobByRoles: (state, action) => {
+      state = state.filter((job) => job.jobRole === action.payload);
+    },
+    filterJobBySalary: (state, action) => {
+      state = state.filter((job) => job.minJdSalary === action.payload);
+    },
     removeJob: (state, action) => {
       state = state.filter((job) => job.jdUid !== action.payload);
     },
   },
 });
 
-export const { addJobs, removeJob } = jobDataSlice.actions;
+export const { addJobs, removeJob, filterJobByLocation } = jobDataSlice.actions;
 
 export default jobDataSlice.reducer;
