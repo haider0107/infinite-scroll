@@ -15,6 +15,7 @@ function useFetchJobs(init = false) {
   const dispatch = useDispatch();
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const { data } = await axios.post(
         "https://api.weekday.technology/adhoc/getSampleJdJSON",
@@ -25,17 +26,15 @@ function useFetchJobs(init = false) {
       );
 
       dispatch(addJobs(data.jdList));
-      setFilters();
-
-      //   console.log(data);
+      setFilters(data.jdList);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const setFilters = () => {
-    const data = useSelector((state) => state);
-
+  const setFilters = (data) => {
     const newLocations = new Set();
     const newMinExperiance = new Set();
     const newCompany = new Set();
@@ -83,6 +82,12 @@ function useFetchJobs(init = false) {
   return {
     getData,
     setOffset,
+    loading,
+    locations,
+    MinBaseSalary,
+    MinExperiance,
+    roles,
+    comapnyNames,
   };
 }
 
