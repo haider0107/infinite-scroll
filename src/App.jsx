@@ -3,9 +3,20 @@ import useFetchJobs from "./hooks/useFetchJobs";
 import { useDispatch, useSelector } from "react-redux";
 import JobCard from "./components/JobCard";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Filters from "./components/Filters";
 
 function App() {
-  const { getData, setOffset, setFilters } = useFetchJobs(true);
+  const {
+    getData,
+    setOffset,
+    setFilters,
+    loading,
+    locations,
+    MinBaseSalary,
+    MinExperiance,
+    roles,
+    comapnyNames,
+  } = useFetchJobs(true);
   const dispatch = useDispatch();
   const data = useSelector((state) => state);
 
@@ -15,7 +26,13 @@ function App() {
         <Typography variant="h4" align="center" style={{ marginTop: "50px" }}>
           Job Search
         </Typography>
-
+        <Filters
+          locations={locations}
+          MinBaseSalary={MinBaseSalary}
+          MinExperiance={MinExperiance}
+          roles={roles}
+          comapnyNames={comapnyNames}
+        />
         <InfiniteScroll
           dataLength={data.length}
           next={() => {
