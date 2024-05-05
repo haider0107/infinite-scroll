@@ -10,8 +10,13 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
+import useFetchJobs from "./hooks/useFetchJobs";
 
 function App() {
+  const { getData } = useFetchJobs(true);
+
+  getData();
+
   return (
     <>
       <Container maxWidth="lg">
