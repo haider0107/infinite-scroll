@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addJobs } from "../features/jobData/jobDataSlice";
+import {
+  addJobs,
+  filterJobByCompany,
+  filterJobByExpericance,
+  filterJobByLocation,
+  filterJobByRoles,
+  filterJobBySalary,
+} from "../features/jobData/jobDataSlice";
 
 function useFetchJobs(init = false) {
   const [loading, setLoading] = useState(false);
@@ -12,6 +19,14 @@ function useFetchJobs(init = false) {
   const [comapnyNames, setComapnyNames] = useState(new Set());
   const [roles, setRoles] = useState(new Set());
 
+  const [filterData, setfilterData] = useState({
+    locations: "",
+    MinBaseSalary: "",
+    MinExperiance: "",
+    roles: "",
+    comapnyNames: "",
+  });
+
   const dispatch = useDispatch();
 
   const fetchData = async () => {
@@ -20,13 +35,14 @@ function useFetchJobs(init = false) {
       const { data } = await axios.post(
         "https://api.weekday.technology/adhoc/getSampleJdJSON",
         {
-          limit: 10,
+          limit: 50,
           offset,
         }
       );
 
       dispatch(addJobs(data.jdList));
       setFilters(data.jdList);
+      applyFilter()
     } catch (error) {
       console.log(error);
     } finally {
@@ -62,15 +78,22 @@ function useFetchJobs(init = false) {
     );
   };
 
-  const getData = () => {
-    const data = useSelector((state) => state);
-
-    console.log(data);
-    console.log("Location", locations);
-    console.log("Experiance", MinExperiance);
-    console.log("comoany", comapnyNames);
-    console.log("roles", roles);
-    console.log("Salary", MinBaseSalary);
+  const applyFilter = () => {
+    if (filterData.locations) {
+      dispatch(filterJobByLocation(filterData.locations));
+    }
+    if (filterData.MinBaseSalary) {
+      dispatch(filterJobBySalary(filterData.MinBaseSalary));
+    }
+    if (filterData.MinExperiance) {
+      dispatch(filterJobByExpericance(filterData.MinExperiance));
+    }
+    if (filterData.roles) {
+      dispatch(filterJobByRoles(filterData.roles));
+    }
+    if (filterData.comapnyNames) {
+      dispatch(filterJobByCompany(filterData.comapnyNames));
+    }
   };
 
   useEffect(() => {
@@ -80,7 +103,6 @@ function useFetchJobs(init = false) {
   }, [offset]);
 
   return {
-    getData,
     setOffset,
     loading,
     locations,
@@ -88,6 +110,9 @@ function useFetchJobs(init = false) {
     MinExperiance,
     roles,
     comapnyNames,
+    filterData,
+    applyFilter,
+    setfilterData,
   };
 }
 

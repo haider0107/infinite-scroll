@@ -44,8 +44,6 @@ function JobCard({ res }) {
             image={res.logoUrl}
             alt="Image"
             style={{
-              //   padding: 0,
-              //   margin: 1,
               width: "90%",
               height: "100%",
               objectFit: "contain",

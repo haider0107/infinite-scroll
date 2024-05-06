@@ -20,11 +20,14 @@ function Filters({
   MinExperiance,
   roles,
   comapnyNames,
+  applyFilter,
+  setfilterData,
+  filterData,
+  setOffset
 }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
 
   const isMobile = useMediaQuery("(max-width:600px)");
 
@@ -45,6 +48,10 @@ function Filters({
             roles={roles}
             comapnyNames={comapnyNames}
             handleClose={handleClose}
+            setfilterData={setfilterData}
+            applyFilter={applyFilter}
+            filterData={filterData}
+            setOffset={setOffset}
           />
         </Box>
       </Modal>
@@ -57,6 +64,10 @@ function Filters({
       roles={roles}
       comapnyNames={comapnyNames}
       handleClose={handleClose}
+      setfilterData={setfilterData}
+      applyFilter={applyFilter}
+      filterData={filterData}
+      setOffset={setOffset}
     />
   );
 }

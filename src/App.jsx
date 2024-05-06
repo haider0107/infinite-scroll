@@ -7,15 +7,16 @@ import Filters from "./components/Filters";
 
 function App() {
   const {
-    getData,
     setOffset,
-    setFilters,
     loading,
     locations,
     MinBaseSalary,
     MinExperiance,
     roles,
     comapnyNames,
+    setfilterData,
+    applyFilter,
+    filterData,
   } = useFetchJobs(true);
   const dispatch = useDispatch();
   const data = useSelector((state) => state);
@@ -23,20 +24,21 @@ function App() {
   return (
     <>
       <Container maxWidth="lg">
-        <Typography variant="h4" align="center" style={{ marginTop: "50px" }}>
-          Job Search
-        </Typography>
         <Filters
           locations={locations}
           MinBaseSalary={MinBaseSalary}
           MinExperiance={MinExperiance}
           roles={roles}
           comapnyNames={comapnyNames}
+          setfilterData={setfilterData}
+          applyFilter={applyFilter}
+          filterData={filterData}
+          setOffset={setOffset}
         />
         <InfiniteScroll
           dataLength={data.length}
           next={() => {
-            setOffset((prev) => prev + 10);
+            setOffset((prev) => prev + 50);
           }}
           hasMore={true}
           loader={<h4>Loading...</h4>}
