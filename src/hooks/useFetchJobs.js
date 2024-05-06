@@ -40,8 +40,11 @@ function useFetchJobs(init = false) {
         }
       );
 
+
       dispatch(addJobs(data.jdList));
+      // set all the filter value
       setFilters(data.jdList);
+      // apply filter if new data is fetched
       applyFilter()
     } catch (error) {
       console.log(error);

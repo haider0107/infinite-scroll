@@ -33,7 +33,7 @@ function Filters({
 
   return isMobile ? (
     <>
-      <Button onClick={handleOpen}>Filter Jobs</Button>
+      <Button variant="contained" sx={{marginTop:2}} onClick={handleOpen}>Filter Jobs</Button>
       <Modal
         open={open}
         onClose={handleClose}

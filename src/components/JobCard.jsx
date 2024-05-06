@@ -72,6 +72,7 @@ function JobCard({ res }) {
       </Grid>
       <CardContent>
         <Typography variant="body2" sx={{ fontWeight: "bold", color: "gray" }}>
+            {/* condition for null Salary value */}
           Estimated Salary :{" "}
           {res.minJdSalary !== null && res.maxJdSalary !== null
             ? `$${res.minJdSalary} - $${res.maxJdSalary}`
@@ -86,6 +87,7 @@ function JobCard({ res }) {
         <Typography variant="body2">
           {displayDescription(res.jobDetailsFromCompany)}
         </Typography>
+        {/* Added to show "View more" button which will show whole description */}
         {!showFullDescription &&
           res.jobDetailsFromCompany.length > maxLength && (
             <div style={{ textAlign: "center" }}>
