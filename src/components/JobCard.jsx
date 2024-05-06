@@ -4,49 +4,127 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  Grid,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 
 function JobCard({ res }) {
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+  const maxLength = 200;
+
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
+
+  const displayDescription = (description) => {
+    if (showFullDescription) {
+      return description;
+    }
+
+    return description.slice(0, maxLength) + "...";
+  };
+
   return (
     <Card
       sx={{ maxWidth: 345 }}
-      style={{ padding: "10px", marginBottom: "30px" }}
+      style={{
+        padding: "10px",
+        marginBottom: "30px",
+        border: "1px solid #ccc",
+        borderRadius: "20px",
+      }}
     >
-      <CardMedia
-        sx={{ height: 140 }}
-        image={res.logoUrl}
-        title="green iguana"
-        style={{ borderRadius: "5px" }}
-      />
+      <Grid container spacing={2}>
+        {/* Image on the left */}
+        <Grid item xs={3}>
+          <CardMedia
+            component="img"
+            image={res.logoUrl}
+            alt="Image"
+            style={{
+              //   padding: 0,
+              //   margin: 1,
+              width: "90%",
+              height: "100%",
+              objectFit: "contain",
+            }}
+          />
+        </Grid>
+        <Grid item xs={9}>
+          <CardContent>
+            <Typography
+              variant="body2"
+              sx={{ fontWeight: "bold", color: "gray" }}
+            >
+              {res.companyName}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{ textTransform: "capitalize", marginY: 1 }}
+            >
+              {res.jobRole}
+            </Typography>
+            <Typography variant="caption" sx={{ textTransform: "capitalize" }}>
+              {res.location}
+            </Typography>
+          </CardContent>
+        </Grid>
+      </Grid>
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {res.companyName}
+        <Typography variant="body2" sx={{ fontWeight: "bold", color: "gray" }}>
+          Estimated Salary :{" "}
+          {res.minJdSalary !== null && res.maxJdSalary !== null
+            ? `$${res.minJdSalary} - $${res.maxJdSalary}`
+            : res.minJdSalary !== null
+            ? `$${res.minJdSalary}`
+            : `$${res.maxJdSalary}`}{" "}
+          LPA
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {res.jobDetailsFromCompany}
+        <Typography gutterBottom variant="h6" component="div">
+          About Company
+        </Typography>
+        <Typography variant="body2">
+          {displayDescription(res.jobDetailsFromCompany)}
+        </Typography>
+        {!showFullDescription &&
+          res.jobDetailsFromCompany.length > maxLength && (
+            <div style={{ textAlign: "center" }}>
+              <Button onClick={toggleDescription} size="small" color="primary">
+                View More
+              </Button>
+            </div>
+          )}
+        <Typography
+          variant="body2"
+          sx={{ fontWeight: "bold", color: "gray", marginTop: 2 }}
+        >
+          Minimum Experiance
+        </Typography>
+
+        <Typography variant="body2">
+          {res.minExp !== null && res.maxExp !== null
+            ? `${res.minExp} - ${res.maxExp} years`
+            : ""}
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "end",
+        }}
+      >
         <Button
-          onClick={() => {
-            setOffset((prev) => prev + 10);
-          }}
           variant="contained"
           size="small"
+          sx={{ width: "100%", marginBottom: "8px", background:"#7FFFD4",color:"black" }}
         >
-          Share
+          Easy Apply
         </Button>
-        <Button
-          onClick={() => {
-            dispatch(filterJobByLocation("delhi ncr"));
-            console.log(data);
-          }}
-          variant="contained"
-          size="small"
-        >
-          Learn More
+        <Button variant="contained" size="small" sx={{ width: "100%",background:"#7F00FF" }}>
+          Unlock referral asks
         </Button>
       </CardActions>
     </Card>
